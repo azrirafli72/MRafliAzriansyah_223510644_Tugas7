@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useTodoStore } from '../stores/todoStore.js';
 
 const store = useTodoStore();
@@ -21,7 +21,14 @@ const toggleTodo = (index) => {
 };
 
 const todos = store.todos;
-const unfinishedTodos = store.unfinishedTodos;
+const unfinishedTodos = ref(store.unfinishedTodos);
+
+watch(
+  () => store.unfinishedTodos,
+  (newCount) => {
+    unfinishedTodos.value = newCount;
+  }
+);
 </script>
 
 <template>
